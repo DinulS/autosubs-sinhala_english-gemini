@@ -10,7 +10,29 @@ Many people mix languages when they talk. In Sri Lanka, for example, a speaker m
 
 That's Sinhala with an English word in the middle. Most speech-to-text models get this wrong: they translate the English word, or write it in Sinhala letters (ඩෝර්). Subtitles should show it **exactly as spoken**: Sinhala words in Sinhala script, English words in English letters.
 
-This fork adds **Google Gemini 3.5 Flash** as a model in AutoSubs, with instructions to keep each word in the script of the language it was spoken in. It works for any mix of languages, not only Sinhala and English.
+This fork adds **Google Gemini 3.5 Flash** as a model in AutoSubs, with instructions to keep each word in the script of the language it was spoken in.
+
+## Works with any language mix
+
+Gemini's instructions aren't specific to Sinhala. They cover any mix of languages: write each word in the script of the language it was spoken in, and never translate.
+
+| What's spoken | What you should get |
+|---|---|
+| Sinhala + English | මට Door එක අරගන්න ඕන |
+| Tamil + English | நான் Office போறேன் |
+| Hindi + English | मुझे Meeting में जाना है |
+| Arabic + English | أنا رايح Office |
+| Japanese + English | 明日 Meeting があります |
+| Spanish + English (same alphabet) | Voy al store mañana |
+
+**Tips**
+- **Language setting:** pick the **main** language (for example Tamil), or leave it on **Auto**. Gemini is told which language is the main one, and the other languages in the clip are still handled.
+- **Vocabulary & Context:** type names and words that need a specific spelling there, and Gemini will use them.
+
+**Limits**
+- **Less common languages:** accuracy depends on Gemini, which is strongest in widely spoken languages. Less common ones (some regional languages or dialects) may make more mistakes.
+- **Romanized styles:** some people write mixed speech all in English letters, like Hinglish "mujhe meeting mein jana hai". This app writes the Hindi words in Hindi script instead. Typing "Write everything in English letters" in **Vocabulary & Context** might change that, but it hasn't been tested.
+- **Try a short clip first** in your own language mix before doing a long video.
 
 ## How it works
 
