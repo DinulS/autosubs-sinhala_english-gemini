@@ -384,6 +384,13 @@
         "files": ["model.onnx", "model.weights", "tokens.txt"]
       },
       "ui": {"size": "3.7GB", "ramMb": 4096, "accuracy": 3.5, "speed": 2, "image": "lyrebird.png", "languageSupport": {"kind": "multilingual"}}
+    },
+    {
+      "id": "gemini-3.5-flash",
+      "engine": "gemini",
+      "_source_comment": "Cloud model: nothing is downloaded. Needs the GEMINI_API_KEY environment variable; GEMINI_MODEL overrides the model id.",
+      "source": {"type": "cloud"},
+      "ui": {"size": "0MB", "ramMb": 128, "accuracy": 4.5, "speed": 4, "bestFor": ["si"], "image": "globe.png", "languageSupport": {"kind": "multilingual"}}
     }
   ],
   "_vad_comment": "Voice-activity detection model, auto-downloaded during transcription (not user-selectable).",

@@ -248,6 +248,8 @@ impl ModelManager {
             Source::WhisperGgml { model } => {
                 self.ensure_whisper_model(model, progress, is_cancelled).await
             }
+            // Engines read no files; any existing path satisfies the caller's exists() check.
+            Source::Cloud => self.model_cache_dir(),
             Source::Hf { repo, files } => {
                 if let Some((subdir, _base, key)) = Self::flat_layout(entry) {
                     self.ensure_hf_flat(subdir, &key, repo, files, progress, is_cancelled, "progressSteps.prepare.asr").await
@@ -286,6 +288,7 @@ impl ModelManager {
             MEngine::SenseVoice => ("sense_voice", entry.id.clone()),
             MEngine::Parakeet => ("parakeet", entry.id.clone()),
             MEngine::OmniAsr => ("omni_asr", entry.id.clone()),
+            MEngine::Gemini => ("gemini", entry.id.clone()),
             MEngine::Whisper => ("whisper", entry.id.clone()),
         };
         let mut key = base.clone();
@@ -912,6 +915,8 @@ impl ModelManager {
                         _ => false,
                     }
                 }
+                // Always "ready" so the picker never offers a download.
+                Source::Cloud => true,
                 Source::Hf { repo, files } => {
                     if let Some((subdir, _base, key)) = Self::flat_layout(entry) {
                         let dir = cache_dir.join(subdir).join(key);
@@ -985,6 +990,7 @@ impl ModelManager {
         match manifest::get(model_name) {
             Some(entry) => match &entry.source {
                 Source::WhisperGgml { model } => self.delete_whisper_model(model).is_ok(),
+                Source::Cloud => false,
                 Source::Hf { repo, .. } => {
                     if let Some((subdir, base, key)) = Self::flat_layout(entry) {
                         self.delete_flat_dir(subdir, &base, &key).is_ok()

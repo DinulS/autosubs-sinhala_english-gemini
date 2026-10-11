@@ -7,6 +7,7 @@
 //! - **SenseVoice**: FunAudioLLM SenseVoice via transcribe-rs (ONNX format)
 //! - **GigaAM**: Sber's Russian GigaAM v3 CTC via transcribe-rs (ONNX format)
 //! - **OmniAsr**: Facebook Omni-ASR 300M CTC via ORT (ONNX format)
+//! - **Gemini**: Google Gemini via the cloud API (needs GEMINI_API_KEY)
 
 use crate::engine::EngineConfig;
 use crate::types::{LabeledProgressFn, NewSegmentFn, ProgressType, Segment, SpeechSegment, TranscribeOptions};
@@ -19,6 +20,7 @@ pub mod whisper;
 pub mod onnx;
 pub mod canary;
 pub mod cohere;
+pub mod gemini;
 pub mod gigaam;
 pub mod moonshine;
 pub mod omni_asr;
@@ -158,6 +160,16 @@ pub async fn run_engine(
                 speech_segments,
                 options,
                 use_gpu,
+                progress,
+                new_segment_callback,
+                abort_callback,
+            )
+            .await
+        }
+        ModelEngine::Gemini => {
+            crate::engines::gemini::transcribe_gemini(
+                speech_segments,
+                options,
                 progress,
                 new_segment_callback,
                 abort_callback,

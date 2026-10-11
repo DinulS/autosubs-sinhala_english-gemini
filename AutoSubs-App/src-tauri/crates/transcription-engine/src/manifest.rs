@@ -113,7 +113,7 @@ impl ModelEntry {
     pub fn hf_repo(&self) -> Option<&str> {
         match &self.source {
             Source::Hf { repo, .. } => Some(repo.as_str()),
-            Source::WhisperGgml { .. } => None,
+            Source::WhisperGgml { .. } | Source::Cloud => None,
         }
     }
 }
@@ -129,6 +129,7 @@ pub enum Engine {
     Gigaam,
     SenseVoice,
     OmniAsr,
+    Gemini,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
@@ -154,6 +155,8 @@ pub enum Source {
     /// A whisper.cpp GGML model — expands to `ggml-{model}.bin` from
     /// `ggerganov/whisper.cpp` (plus the optional CoreML encoder on macOS).
     WhisperGgml { model: String },
+    /// Runs on a remote API: nothing to download.
+    Cloud,
 }
 
 /// A single file to download. A plain string keeps the repo-relative name and
@@ -514,6 +517,7 @@ mod tests {
                         | Engine::Cohere
                         | Engine::Gigaam
                         | Engine::OmniAsr
+                        | Engine::Gemini
                 ),
                 "model '{}' uses engine {:?} which has no wrapper yet",
                 e.id,

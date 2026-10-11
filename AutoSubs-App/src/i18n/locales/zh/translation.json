@@ -433,6 +433,12 @@
       "details": "Larger and more accurate multilingual model for 1600+ languages. Outputs lowercase text without punctuation or capitalization.",
       "badge": "Multilingual"
     },
+    "gemini_3_5_flash": {
+      "label": "Gemini 3.5 Flash",
+      "description": "云端，需要 API 密钥",
+      "details": "Google 云端模型。混合语言各用其原有文字书写（如僧伽罗语 + 英语）。需要 GEMINI_API_KEY 和网络连接，音频会发送到 Google。",
+      "badge": "云端"
+    },
     "bestPick": "最佳选择",
     "availableCount": "{{count}} 个可用模型",
     "orukeet": {

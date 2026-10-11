@@ -1,0 +1,6 @@
+{
+  "productName": "AutoSubs Gemini",
+  "identifier": "com.autosubs.gemini",
+  "bundle": {"createUpdaterArtifacts": false, "windows": {"signCommand": null, "certificateThumbprint": null}},
+  "plugins": {"updater": {"endpoints": []}}
+}

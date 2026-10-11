@@ -398,6 +398,12 @@
       "details": "Larger and more accurate multilingual model for 1600+ languages. Outputs lowercase text without punctuation or capitalization.",
       "badge": "Multilingual"
     },
+    "gemini_3_5_flash": {
+      "label": "Gemini 3.5 Flash",
+      "description": "クラウド、APIキーが必要",
+      "details": "Googleのクラウドモデル。混在する言語をそれぞれの文字で書き分けます（例：シンハラ語＋英語）。GEMINI_API_KEYとインターネット接続が必要で、音声はGoogleに送信されます。",
+      "badge": "クラウド"
+    },
     "bestPick": "おすすめ",
     "availableCount": "{{count}} 個のモデル",
     "orukeet": {

@@ -1,3 +1,70 @@
+# AutoSubs Gemini
+
+> **This is an unofficial fork of [AutoSubs](https://github.com/tmoroney/auto-subs) by [Tom Moroney](https://github.com/tmoroney).** It adds one thing: a **Gemini 3.5 Flash** transcription option for people who speak more than one language in the same sentence. Everything else is the original AutoSubs. The original README follows below this section.
+
+## Why this fork exists
+
+Many people mix languages when they talk. In Sri Lanka, for example, a speaker might say:
+
+> මට Door එක අරගන්න ඕන
+
+That's Sinhala with an English word in the middle. Most speech-to-text models get this wrong: they translate the English word, or write it in Sinhala letters (ඩෝර්). Subtitles should show it **exactly as spoken**: Sinhala words in Sinhala script, English words in English letters.
+
+This fork adds **Google Gemini 3.5 Flash** as a model in AutoSubs, with instructions to keep each word in the script of the language it was spoken in. It works for any mix of languages, not only Sinhala and English.
+
+## How it works
+
+1. AutoSubs detects where speech starts and stops, the same as with every other model, so subtitle timing stays accurate.
+2. Each speech chunk (30 seconds at most) is sent to Gemini, which returns the words in mixed script.
+3. Anything you type in **Vocabulary & Context** is sent to Gemini too. Use it for names, brands, or words that need a specific spelling.
+
+The code is in [`gemini.rs`](AutoSubs-App/src-tauri/crates/transcription-engine/src/engines/gemini.rs).
+
+## Install (Windows)
+
+1. Download **`AutoSubs Gemini_x.x.x_x64-setup.exe`** from the [Releases page](../../releases/latest) and run it.
+   It installs as a **separate app** called *AutoSubs Gemini*, so you can keep the original AutoSubs installed alongside it.
+   The installer isn't code-signed, so Windows SmartScreen may warn you. Click **More info → Run anyway**.
+2. Get a free API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+3. Save the key on your PC. Open PowerShell and run:
+   ```powershell
+   setx GEMINI_API_KEY "paste-your-key-here"
+   ```
+4. Start **AutoSubs Gemini**. Pick your language (for example **Sinhala**) and choose the **Gemini 3.5 Flash** model. Nothing needs downloading.
+
+Optional: to use a different Gemini model, set `GEMINI_MODEL` (for example `setx GEMINI_MODEL "gemini-3.6-flash"`). Google currently routes `gemini-3.5-flash` to `gemini-3.6-flash` automatically.
+
+## Things to know
+
+- **The Gemini model is not offline.** Your audio is sent to Google, and an internet connection is needed. All the other models in the app still run fully on your computer.
+- **API usage:** each transcription uses your Gemini API quota. Check Google's pricing and free-tier limits.
+- **No auto-updates:** this build doesn't update itself. That stops the official updater from replacing it with a version that has no Gemini option.
+- **DaVinci Resolve:** both apps answer the same *Workspace → Scripts → AutoSubs* menu item, so with Resolve, keep only one of them open at a time.
+- **Keep your API key private.** Never paste it into an issue, a screenshot, or a commit.
+
+## Build from source (Windows)
+
+Follow the original [Contributing Guide](CONTRIBUTING.md) for prerequisites (Rust, LLVM, Vulkan SDK, Visual Studio C++ tools, and a short `CARGO_TARGET_DIR`). Put an `ffmpeg.exe` at `AutoSubs-App/src-tauri/binaries/ffmpeg-x86_64-pc-windows-msvc.exe`, then:
+
+```powershell
+cd AutoSubs-App
+npm ci
+npm --prefix ../Adobe-Extension ci
+npx tauri build --bundles nsis --config src-tauri/tauri.gemini.conf.json -- --no-default-features --features windows
+```
+
+[`tauri.gemini.conf.json`](AutoSubs-App/src-tauri/tauri.gemini.conf.json) gives the build its own name and install folder, and turns off code signing and auto-updates.
+
+## Thank you 🙏
+
+A huge thank you to **[Tom Moroney](https://github.com/tmoroney)** and every [AutoSubs contributor](https://github.com/tmoroney/auto-subs/graphs/contributors). AutoSubs is an excellent, free, local-first subtitle tool, and its clean engine design made this addition small. All the hard work (transcription pipeline, speaker labels, DaVinci Resolve and Premiere integration, caption styles) is theirs.
+
+If AutoSubs helps you, please support the original project: ⭐ star [tmoroney/auto-subs](https://github.com/tmoroney/auto-subs) and use the official version whenever you don't need mixed-language subtitles.
+
+This fork is not affiliated with or endorsed by the AutoSubs project. It is released under the same [MIT License](LICENSE), with the original copyright kept.
+
+---
+
 # AutoSubs
 
 Local-first AI subtitles. No cloud, no subscription, no data leaving your machine.

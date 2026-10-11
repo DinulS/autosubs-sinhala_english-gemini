@@ -29,7 +29,8 @@ export function ManageModelsDialog({
   onRefresh
 }: ManageModelsDialogProps) {
   const { t } = useTranslation();
-  const downloadedModels = models.filter(model => model.isDownloaded);
+  // Cloud models report as downloaded but have no files to delete.
+  const downloadedModels = models.filter(model => model.isDownloaded && model.engine !== "gemini");
 
   // Keep the latest callback in a ref so the effect below only fires on the
   // closed -> open transition; depending on `onRefresh` directly would re-fire
