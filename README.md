@@ -22,7 +22,7 @@ The code is in [`gemini.rs`](AutoSubs-App/src-tauri/crates/transcription-engine/
 
 ## Install (Windows)
 
-1. Download **`AutoSubs Gemini_x.x.x_x64-setup.exe`** from the [Releases page](../../releases/latest) and run it.
+1. Download **`AutoSubs-Gemini_x.x.x_x64-setup.exe`** from the [Releases page](../../releases/latest) and run it.
    It installs as a **separate app** called *AutoSubs Gemini*, so you can keep the original AutoSubs installed alongside it.
    The installer isn't code-signed, so Windows SmartScreen may warn you. Click **More info → Run anyway**.
 2. Get a free API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
